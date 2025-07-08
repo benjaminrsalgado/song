@@ -68,3 +68,8 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+
+
+//ESTA ES OTRA OPCION DE HACERLO ME QUEDE EN FUNCION
+
