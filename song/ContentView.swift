@@ -21,23 +21,17 @@ class CancionesManager: ObservableObject {
         Gen(titulo: "All Too Well", esFavorita: true),
         Gen(titulo: "Shake It Off", esFavorita: false)
     ]
-    
-    func toggleFavorito(id: UUID) {
-        if let index = canciones.firstIndex(where: { $0.id == id }) {
-            canciones[index].esFavorita.toggle()
-        }
-    }
 }
 
 // 3️⃣ Vista principal que muestra la lista
 struct ListaCanciones: View {
     @StateObject var manager = CancionesManager()
-    
+
     var body: some View {
         NavigationView {
             List {
-                ForEach(manager.canciones) { cancion in
-                    CancionView(cancion: cancion, manager: manager)
+                ForEach($manager.canciones) { $cancion in
+                    CancionView(cancion: $cancion)
                 }
             }
             .navigationTitle("Mis Canciones")
@@ -47,15 +41,14 @@ struct ListaCanciones: View {
 
 // 4️⃣ Vista hija para cada fila
 struct CancionView: View {
-    let cancion: Gen
-    @ObservedObject var manager: CancionesManager
-    
+    @Binding var cancion: Gen
+
     var body: some View {
         HStack {
             Text(cancion.titulo)
             Spacer()
             Button(action: {
-                manager.toggleFavorito(id: cancion.id)
+                cancion.esFavorita.toggle()
             }) {
                 Image(systemName: cancion.esFavorita ? "heart.fill" : "heart")
                     .foregroundColor(.pink)
