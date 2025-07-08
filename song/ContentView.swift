@@ -8,7 +8,7 @@
 import SwiftUI
 
 // 1️⃣ Modelo con Identifiable
-struct Cancion: Identifiable {
+struct Gen: Identifiable {
     let id = UUID()
     let titulo: String
     var esFavorita: Bool
@@ -16,15 +16,11 @@ struct Cancion: Identifiable {
 
 // 2️⃣ ViewModel que maneja el estado
 class CancionesManager: ObservableObject {
-    @Published var canciones: [Cancion]
-    
-    init() {
-        self.canciones = [
-            Cancion(titulo: "Cruel Summer", esFavorita: false),
-            Cancion(titulo: "All Too Well", esFavorita: true),
-            Cancion(titulo: "Shake It Off", esFavorita: false)
-        ]
-    }
+    @Published var canciones: [Gen] = [
+        Gen(titulo: "Cruel Summer", esFavorita: false),
+        Gen(titulo: "All Too Well", esFavorita: true),
+        Gen(titulo: "Shake It Off", esFavorita: false)
+    ]
     
     func toggleFavorito(id: UUID) {
         if let index = canciones.firstIndex(where: { $0.id == id }) {
@@ -51,7 +47,7 @@ struct ListaCanciones: View {
 
 // 4️⃣ Vista hija para cada fila
 struct CancionView: View {
-    let cancion: Cancion
+    let cancion: Gen
     @ObservedObject var manager: CancionesManager
     
     var body: some View {
