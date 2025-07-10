@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var luci = 9
     var body: some View {
-        pepe(luci: $luci)
-    }
-}
-
-struct pepe:View{
-    @Binding var luci: Int
-    var body: some View{
 
     }
 }
+
+class  ContadorModel: ObservableObject{
+    @Published var cuenta = 0
+}
+
 
 #Preview {
     ContentView()
