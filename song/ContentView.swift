@@ -23,6 +23,7 @@ class  ModoModel: ObservableObject{
 
 struct PantallaAjustes: View{
     @StateObject var keep = ModoModel()
+    @State var mostrarMensaje = false // @State
     var body: some View{
         VStack{
             if keep.modoOscuro{
@@ -33,6 +34,7 @@ struct PantallaAjustes: View{
                     
             }
             BotonAlternarModo(keep:keep)
+            BotonAlternarModo(mostrarMensaje: $mostrarMensaje) //@Binding y @State
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)// se expanda horiz. y verti.
             .background(keep.modoOscuro ? .black : .blue)// condicional para que cambie
@@ -42,12 +44,24 @@ struct PantallaAjustes: View{
 
 struct BotonAlternarModo: View{
     @ObservedObject var keep: ModoModel
+    @Binding var mostrarMensaje: Bool //@Binding
     var body: some View{
         Button(action:{
             keep.alternarModo()
         }){
             Text("PRESS THE BUTTON")
                 .foregroundColor(.gray)
+        }
+    }
+}
+
+struct Boton2:View{
+    @Binding var mostrarMensaje:Bool
+    var body: some View{
+        Button(action:{
+            .mostrarMensaje.toggle()
+        }){
+            
         }
     }
 }
