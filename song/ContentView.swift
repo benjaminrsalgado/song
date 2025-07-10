@@ -9,38 +9,40 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        PantallaPrincipal()
-       
+       PerfilView()
     }
 }
 
-//ESTA ES LA CALSE
-class  ContadorModel: ObservableObject{
-    @Published var cuenta = 0
+class  UsuarioModel: ObservableObject{
+    @Published var nombre = "Invitado"
     
-    func change(){
-        cuenta += 1
+    func cambiarNombre(){
+        nombre = "Benjamin Rojo"
     }
 }
-//LA VISTA QUE HEREDA LA CLASE
-struct PantallaPrincipal: View{
-    @StateObject var keep = ContadorModel()
+
+struct PerfilView: View{
+    @StateObject var keep = UsuarioModel()
     var body: some View{
-        Text("\(keep.cuenta)")
-        BotonContador(keep: keep)
-    }
-}
-//LA SEGUNDA VISTA HEREDANDO LA CLASE
-struct BotonContador:View{
-    @ObservedObject var keep: ContadorModel
-    var body: some View{
-        Button(action:{
-            keep.change()
-        }){Text("Press the button")
-                .foregroundColor(.red)
+        VStack{
+            Text(keep.nombre)
+            EditarNombreView(keep:keep)
         }
     }
 }
+
+struct EditarNombreView:View{
+    @ObservedObject var keep: UsuarioModel
+    var body: some View{
+        Button(action:{
+            keep.cambiarNombre()
+        }){
+            Text("Change the name")
+                .foregroundColor(.blue)
+        }
+    }
+}
+
 
 
 #Preview {
