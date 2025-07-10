@@ -9,41 +9,48 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-       PerfilView()
+   PantallaAjustes()
     }
 }
 
-class  UsuarioModel: ObservableObject{
-    @Published var nombre = "Invitado"
+class  ModoModel: ObservableObject{
+    @Published var modoOscuro = false
     
-    func cambiarNombre(){
-        nombre = "Benjamin Rojo"
+    func  alternarModo() {
+        modoOscuro.toggle()
     }
 }
 
-struct PerfilView: View{
-    @StateObject var keep = UsuarioModel()
+struct PantallaAjustes: View{
+    @StateObject var keep = ModoModel()
     var body: some View{
         VStack{
-            Text(keep.nombre)
-            EditarNombreView(keep:keep)
+            if keep.modoOscuro{
+                Text("modo oscuro activado")
+                    
+            }else{
+                Text("modo claro")
+                    
+            }
+            BotonAlternarModo(keep:keep)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)// se expanda horiz. y verti.
+            .background(keep.modoOscuro ? .black : .blue)// condicional para que cambie
+            .foregroundColor(.white) //color del texto
     }
 }
 
-struct EditarNombreView:View{
-    @ObservedObject var keep: UsuarioModel
+struct BotonAlternarModo: View{
+    @ObservedObject var keep: ModoModel
     var body: some View{
         Button(action:{
-            keep.cambiarNombre()
+            keep.alternarModo()
         }){
-            Text("Change the name")
-                .foregroundColor(.blue)
+            Text("PRESS THE BUTTON")
+                .foregroundColor(.gray)
         }
     }
 }
-
-
 
 #Preview {
     ContentView()
