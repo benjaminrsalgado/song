@@ -27,6 +27,7 @@ struct VistaLikes: View{
     var body: some View{
         VStack{
             Text("La cantidad de likes son \(keep.likes)")
+            Text("La cantidad de likes son \(keep.likes)")
             if mostrarMensaje {
                 Text("Gracias por tu like!!!")
             }else{
