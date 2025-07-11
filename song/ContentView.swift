@@ -9,62 +9,56 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-   PantallaAjustes()
+        VistaLikes()
     }
 }
 
-class  ModoModel: ObservableObject{
-    @Published var modoOscuro = false
+class LikeModel: ObservableObject{
+    @Published var likes = 0
     
-    func  alternarModo() {
-        modoOscuro.toggle()
+    func sumar(){
+        likes += 1
     }
 }
 
-struct PantallaAjustes: View{
-    @StateObject var keep = ModoModel()
-    @State var mostrarMensaje = false // @State
+struct VistaLikes: View{
+    @StateObject var keep = LikeModel()
+    @State var mostrarMensaje = false //@State
     var body: some View{
         VStack{
-            if keep.modoOscuro{
-                Text("modo oscuro activado")
-                    
+            Text("La cantidad de likes son \(keep.likes)")
+            if mostrarMensaje {
+                Text("Gracias por tu like!!!")
             }else{
-                Text("modo claro")
-                    
+                Text("nadaa")
             }
-            BotonAlternarModo(keep:keep)
-            Boton2(mostrarMensaje: $mostrarMensaje) //@Binding y @State
+            SwitchMensaje(mostrarMensaje: $mostrarMensaje) // ✅ conexión con Binding
+            BotonLike(keep:keep) //✅ conexión con la clase en las dos struct
+
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)// se expanda horiz. y verti.
-            .background(keep.modoOscuro ? .black : .blue)// condicional para que cambie
-            .foregroundColor(.white) //color del texto
     }
 }
 
-struct BotonAlternarModo: View{
-    @ObservedObject var keep: ModoModel
+struct BotonLike:View{
+    @ObservedObject var keep : LikeModel
     var body: some View{
-        Button(action:{
-            keep.alternarModo()
-        }){
-            Text("PRESS THE BUTTON")
-                .foregroundColor(.gray)
+        VStack{
+            Button(action:{
+                keep.sumar()
+            }){
+                Text("Press tu plus the number +")
+                    .foregroundColor(.red)
+            }
         }
     }
 }
 
-struct Boton2:View{
-    @Binding var mostrarMensaje:Bool //@Binding
+struct SwitchMensaje: View{
+    @Binding var mostrarMensaje:Bool
     var body: some View{
-        Button(action:{
-            mostrarMensaje.toggle()
-        }){
-            Text("press to change")
-        }
+        Toggle("Mostrar mensaje", isOn: $mostrarMensaje)
     }
 }
-
 #Preview {
     ContentView()
 }
