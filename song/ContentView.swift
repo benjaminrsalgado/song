@@ -34,7 +34,7 @@ struct PantallaAjustes: View{
                     
             }
             BotonAlternarModo(keep:keep)
-            BotonAlternarModo(mostrarMensaje: $mostrarMensaje) //@Binding y @State
+            Boton2(mostrarMensaje: $mostrarMensaje) //@Binding y @State
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)// se expanda horiz. y verti.
             .background(keep.modoOscuro ? .black : .blue)// condicional para que cambie
@@ -44,7 +44,6 @@ struct PantallaAjustes: View{
 
 struct BotonAlternarModo: View{
     @ObservedObject var keep: ModoModel
-    @Binding var mostrarMensaje: Bool //@Binding
     var body: some View{
         Button(action:{
             keep.alternarModo()
@@ -56,12 +55,12 @@ struct BotonAlternarModo: View{
 }
 
 struct Boton2:View{
-    @Binding var mostrarMensaje:Bool
+    @Binding var mostrarMensaje:Bool //@Binding
     var body: some View{
         Button(action:{
-            .mostrarMensaje.toggle()
+            mostrarMensaje.toggle()
         }){
-            
+            Text("press to change")
         }
     }
 }
